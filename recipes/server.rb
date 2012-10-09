@@ -20,6 +20,8 @@
 include_recipe "ipmitool"
 include_recipe "conserver::client"
 
+servers = search :node, "id:*"
+
 package "conserver-server" do
   action :upgrade
 end
@@ -71,7 +73,7 @@ template ::File.join(node['conserver']['conf_dir'], "conserver.cf") do
   action :create
 
   variables(
-    :servers => search(:node, "id:*")
+    :servers => servers
   )
 
   notifies :restart, resources(:service => "conserver-server")

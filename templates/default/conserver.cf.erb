@@ -21,11 +21,10 @@ access * {
 # List of servers.
 
 <% @servers.each do |server| %>
-<% puts server %>
 console <%= server['hostname'] %> {
   master localhost;
   type exec;
   exec <%= node['ipmitool']['cmd'] %> -f <%= ::File.join(node['conserver']['conf_dir'], ".ipmipass") %> -H <%= server['ipmi']['address'] %> -U root -C 3 -I lanplus sol activate;
-  idletimeout <%= node['conserver']['idletimeout'] %>;
+  idletimeout <%= node['conserver']['idletimeout'] %>; 
 }
 <% end %>

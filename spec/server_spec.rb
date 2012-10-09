@@ -1,7 +1,10 @@
 require "chefspec"
 
 describe "conserver::server" do
-  before { @chef_run = ChefSpec::ChefRunner.new.converge "conserver::server" }
+  before do
+    Chef::Recipe.any_instance.stub(:search)
+    @chef_run = ChefSpec::ChefRunner.new.converge "conserver::server"
+  end
 
   it "installs ipmitool" do
     chef_run = ChefSpec::ChefRunner.new
@@ -90,7 +93,20 @@ describe "conserver::server" do
   describe "conserver.passwd" do
     before do
       @file = "/etc/conserver/conserver.cf"
-      Chef::Recipe.any_instance.should_receive(:search)
+      Chef::Recipe.any_instance.stub(:search).with(:node, "id:*").and_return([
+        {
+          "hostname" => "node1.example.com",
+          "ipmi" => {
+            "address" => "172.16.2.1"
+          }
+        },
+        {
+          "hostname" => "node2.example.com",
+          "ipmi" => {
+            "address" => "172.16.2.2"
+          }
+        }
+      ])
       @chef_run = ChefSpec::ChefRunner.new.converge "conserver::server"
     end
 
@@ -104,11 +120,6 @@ describe "conserver::server" do
       sprintf("%o", m).should == "644"
     end
 
-    it "has user:password" do
-      @chef_run.should create_file_with_content @file,
-        %Q{root:password}
-    end
-
     it "has logfile" do
       @chef_run.should create_file_with_content @file,
         %Q{logfile /var/log/conserver/&.log}
@@ -119,15 +130,20 @@ describe "conserver::server" do
         %Q{allowed 127.0.0.1}
     end
 
-#<% @servers.each do |server| %>
-#<% puts server %>
-#console <%= server['hostname'] %> {
-#  master localhost;
-#  type exec;
-#  exec <%= node['ipmitool']['cmd'] %> -f <%= ::File.join(node['conserver']['conf_dir'], ".ipmipass") %> -H <%= server['ipmi']['address'] %> -U root -C 3 -I lanplus sol activate;
-#  idletimeout <%= node['conserver']['idletimeout'] %>;
-#}
-#<% end %>
+    it "has console" do
+      @chef_run.should create_file_with_content @file,
+        %Q{console node1.example.com}
+    end
+
+    it "has idletimeout" do
+      @chef_run.should create_file_with_content @file,
+        %Q{idletimeout 4h}
+    end
+
+    it "has exec" do
+      @chef_run.should create_file_with_content @file,
+        %Q{exec /usr/bin/ipmitool -f /etc/conserver/.ipmipass -H 172.16.2.1 -U root -C 3 -I lanplus sol activate;}
+    end
 
     it "restarts conserver-server" do
       pending
