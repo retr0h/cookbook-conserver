@@ -12,16 +12,17 @@ Requirements
 Attributes
 ==========
 
-* default['conserver']['server']['port'] - Set the TCP port for the master process to listen on.
-* default['conserver']['server']['master'] - Bind to a particular IP address (like '127.0.0.1') instead of all interfaces.
-* default['conserver']['server']['user'] - The user conserver runs as.
-* default['conserver']['user'] - The console user to connect as.
+* `default['conserver']['server_search']` - The search to determine the servers to connect to. 
+* `default['conserver']['conf_dir']` - The directory to conserver config files.
+* `default['conserver']['access']['allowed']` - The list of hostnames are added to the 'allowed' list, which grants connections from the hosts but requires username authentication.
+* `default['conserver']['access']['user']` - The console user to connect as.
+* `default['conserver']['logfile']` - Set the logfile to write to when in daemon mode.
+* `default['conserver']['idletimeout']` - The idle timeout of the console.
+* `default['conserver']['server']['port']` - Set the TCP port for the master process to listen on.
+* `default['conserver']['server']['master']` - Bind to a particular IP address (like '127.0.0.1') instead of all interfaces.
+* `default['conserver']['server']['user']` - The user conserver runs as.
+
 * default['conserver']['pass'] - The console password to use.
-* default['conserver']['conf_dir'] - The directory to conserver config files.
-* default['conserver']['access']['allowed'] - The list of hostnames are added to the 'allowed' list, which grants connections from the hosts but requires username authentication.
-* default['conserver']['access']['trusted'] - The list of hostnames are added to the 'trusted' list, which grants connections from the hosts without username authentication.
-* default['conserver']['logfile'] - Set the logfile to write to when in daemon mode.
-* default['conserver']['idletimeout'] - The idle timeout of the console.
 
 Usage
 =====

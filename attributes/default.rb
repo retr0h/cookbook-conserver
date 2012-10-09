@@ -19,7 +19,7 @@
 
 include_attribute "ipmitool"
 
-default["conserver"]["server_search"] = "*:*"
+default['conserver']['server_search'] = "id:*"
 default['conserver']['conf_dir'] = ::File.join ::File::SEPARATOR, "etc", "conserver"
 default['conserver']['access']['allowed'] = "127.0.0.1"
 default['conserver']['access']['user'] = "root"

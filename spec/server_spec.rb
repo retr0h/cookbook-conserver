@@ -2,6 +2,7 @@ require "chefspec"
 
 describe "conserver::server" do
   before do
+    Chef::Config[:solo] = false
     Chef::Recipe.any_instance.stub(:search)
     @chef_run = ChefSpec::ChefRunner.new.converge "conserver::server"
   end

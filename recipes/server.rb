@@ -20,7 +20,14 @@
 include_recipe "ipmitool"
 include_recipe "conserver::client"
 
-servers = search :node, "id:*"
+#FC003
+#servers = Array.new
+#if Chef::Config[:solo]
+#  Chef::Log.warn "This recipe uses search. Chef Solo does not support search."
+#else
+#end
+
+servers = search :node, node["conserver"]["server_search"]
 
 package "conserver-server" do
   action :upgrade
