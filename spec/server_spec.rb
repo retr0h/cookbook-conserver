@@ -2,12 +2,12 @@ require "chefspec"
 
 describe "conserver::server" do
   before do
-    Chef::Config[:solo] = false
     Chef::Recipe.any_instance.stub(:search)
     @chef_run = ChefSpec::ChefRunner.new.converge "conserver::server"
   end
 
   it "installs ipmitool" do
+    Chef::Config[:solo] = false
     chef_run = ChefSpec::ChefRunner.new
 
     Chef::Recipe.any_instance.stub(:include_recipe)
@@ -60,13 +60,41 @@ describe "conserver::server" do
     end
   end
 
+  describe ".ipmipass" do
+    before do
+      @file = "/etc/conserver/.ipmipass"
+      @chef_run = ChefSpec::ChefRunner.new do |node|
+        node['conserver'] = {}
+        node['conserver']['ipmi'] = {}
+        node['conserver']['ipmi']['password'] = "password"
+      end
+      @chef_run.converge "conserver::server"
+    end
+
+    it "has proper owner" do
+      @chef_run.file(@file).should be_owned_by("conservr", "root")
+    end
+
+    it "has proper modes" do
+      m = @chef_run.file(@file).mode
+
+      sprintf("%o", m).should == "600"
+    end
+
+    it "has password" do
+      @chef_run.should create_file_with_content @file,
+        %Q{password}
+    end
+  end
+
   describe "conserver.passwd" do
     before do
       @file = "/etc/conserver/conserver.passwd"
       @chef_run = ChefSpec::ChefRunner.new do |node|
         node['conserver'] = {}
         node['conserver']['access'] = {}
-        node['conserver']['access']['pass'] = "password"
+        node['conserver']['access']['user'] = "user"
+        node['conserver']['access']['password'] = "password"
       end
       @chef_run.converge "conserver::server"
     end
@@ -83,7 +111,7 @@ describe "conserver::server" do
 
     it "has user:password" do
       @chef_run.should create_file_with_content @file,
-        %Q{root:password}
+        %Q{user:password}
     end
 
     it "restarts conserver-server" do
@@ -144,6 +172,10 @@ describe "conserver::server" do
     it "has exec" do
       @chef_run.should create_file_with_content @file,
         %Q{exec /usr/bin/ipmitool -f /etc/conserver/.ipmipass -H 172.16.2.1 -U root -C 3 -I lanplus sol activate;}
+    end
+
+    it "logs unsupported when running in Chef Solo" do
+      pending
     end
 
     it "restarts conserver-server" do

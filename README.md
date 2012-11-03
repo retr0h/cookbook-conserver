@@ -3,11 +3,14 @@ Description
 
 Installs/Configures conserver
 
+Assumes the node has IPMI connectivity to `node['ipmi']['address']` found by `node['conserver']['server_search']`.
+
 Requirements
 ============
 
 * Chef 0.8+
 * ipmitool
+* Ohai [ipmi.rb](https://bitbucket.org/retr0h/ohai/src) plugin
 
 Attributes
 ==========
@@ -16,13 +19,15 @@ Attributes
 * `default['conserver']['conf_dir']` - The directory to conserver config files.
 * `default['conserver']['access']['allowed']` - The list of hostnames are added to the 'allowed' list, which grants connections from the hosts but requires username authentication.
 * `default['conserver']['access']['user']` - The console user to connect as.
+* `default['conserver']['password']` - The console password to use when connecting (Required).
 * `default['conserver']['logfile']` - Set the logfile to write to when in daemon mode.
 * `default['conserver']['idletimeout']` - The idle timeout of the console.
 * `default['conserver']['server']['port']` - Set the TCP port for the master process to listen on.
 * `default['conserver']['server']['master']` - Bind to a particular IP address (like '127.0.0.1') instead of all interfaces.
 * `default['conserver']['server']['user']` - The user conserver runs as.
-
-* default['conserver']['pass'] - The console password to use.
+* `default['conserver']['ipmi']['command']` - The IPMI SOL command to execute.
+* `default['conserver']['ipmi']['user']` - The IPMI user to connect as.
+* `default['conserver']['ipmi']['password']` - The IPMI password to use when connecting (Required).
 
 Usage
 =====

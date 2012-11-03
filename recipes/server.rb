@@ -20,13 +20,7 @@
 include_recipe "ipmitool"
 include_recipe "conserver::client"
 
-#FC003
-#servers = Array.new
-#if Chef::Config[:solo]
-#  Chef::Log.warn "This recipe uses search. Chef Solo does not support search."
-#else
-#end
-
+#TODO:FC003
 servers = search :node, node["conserver"]["server_search"]
 
 package "conserver-server" do
@@ -39,15 +33,14 @@ service "conserver-server" do
   action [ :enable, :start ]
 end
 
-### TODO: What should I do????....
-#file ::File.join(node['conserver']['conf_dir'], ".ipmipass") do
-#  owner   node['conserver']['server']['user']
-#  group   "root"
-#  mode    0600
-#  content creds['password']
-#
-#  action :create
-#end
+file ::File.join(node['conserver']['conf_dir'], ".ipmipass") do
+  owner   node['conserver']['server']['user']
+  group   "root"
+  mode    00600
+  content node['conserver']['ipmi']['password']
+
+  action :create
+end
 
 template ::File.join(node['conserver']['conf_dir'], "server.conf") do
   source "server.conf.erb"

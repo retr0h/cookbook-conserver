@@ -22,11 +22,15 @@ include_attribute "ipmitool"
 default['conserver']['server_search'] = "id:*"
 default['conserver']['conf_dir'] = ::File.join ::File::SEPARATOR, "etc", "conserver"
 default['conserver']['access']['allowed'] = "127.0.0.1"
-default['conserver']['access']['user'] = "root"
-# TODO: default['conserver']['access']['pass']
+default['conserver']['access']['user'] = "admin"
+default['conserver']['access']['password'] = "admin"
 default['conserver']['logfile'] = ::File.join ::File::SEPARATOR, "var", "log", "conserver", "&.log"
 default['conserver']['idletimeout'] = "4h"
 
 default['conserver']['server']['port'] = "3109"
 default['conserver']['server']['master'] = "127.0.0.1"
-default['conserver']['server']['user'] = "conservr" # daemon runs as
+default['conserver']['server']['user'] = "conservr"
+
+default['conserver']['ipmi']['command'] = "#{node['ipmitool']['cmd']} -f #{::File.join node['conserver']['conf_dir'], ".ipmipass"} -H %s -U %s -C 3 -I lanplus sol activate"
+default['conserver']['ipmi']['user'] = "root"
+default['conserver']['ipmi']['password'] = "root"
