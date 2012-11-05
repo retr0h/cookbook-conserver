@@ -64,9 +64,9 @@ describe "conserver::server" do
     before do
       @file = "/etc/conserver/.ipmipass"
       @chef_run = ChefSpec::ChefRunner.new do |node|
-        node['conserver'] = {}
-        node['conserver']['ipmi'] = {}
-        node['conserver']['ipmi']['password'] = "password"
+        node.set['conserver'] = {}
+        node.set['conserver']['ipmi'] = {}
+        node.set['conserver']['ipmi']['password'] = "password"
       end
       @chef_run.converge "conserver::server"
     end
@@ -91,10 +91,10 @@ describe "conserver::server" do
     before do
       @file = "/etc/conserver/conserver.passwd"
       @chef_run = ChefSpec::ChefRunner.new do |node|
-        node['conserver'] = {}
-        node['conserver']['access'] = {}
-        node['conserver']['access']['user'] = "user"
-        node['conserver']['access']['password'] = "password"
+        node.set['conserver'] = {}
+        node.set['conserver']['access'] = {}
+        node.set['conserver']['access']['user'] = "user"
+        node.set['conserver']['access']['password'] = "password"
       end
       @chef_run.converge "conserver::server"
     end
