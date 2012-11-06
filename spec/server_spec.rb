@@ -56,7 +56,9 @@ describe "conserver::server" do
     end
 
     it "restarts conserver-server" do
-      pending
+      resource = [ "conserver-server", "service", "delayed" ]
+
+      @chef_run.template(@file).notifies(*resource).should be_true
     end
   end
 
@@ -115,7 +117,9 @@ describe "conserver::server" do
     end
 
     it "restarts conserver-server" do
-      pending
+      resource = [ "conserver-server", "service", "delayed" ]
+
+      @chef_run.template(@file).notifies(*resource).should be_true
     end
   end
 
@@ -179,7 +183,9 @@ describe "conserver::server" do
     end
 
     it "restarts conserver-server" do
-      pending
+      resource = [ "conserver-server", "service", "delayed" ]
+
+      @chef_run.template(@file).notifies(*resource).should be_true
     end
   end
 end
