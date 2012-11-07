@@ -2,25 +2,24 @@ require "chefspec"
 
 describe "conserver::server" do
   before do
-    Chef::Recipe.any_instance.stub(:search)
-    @chef_run = ChefSpec::ChefRunner.new.converge "conserver::server"
+    ::Chef::Recipe.any_instance.stub(:search)
+    @chef_run = ::ChefSpec::ChefRunner.new.converge "conserver::server"
   end
 
   it "installs ipmitool" do
-    Chef::Config[:solo] = false
-    chef_run = ChefSpec::ChefRunner.new
+    chef_run = ::ChefSpec::ChefRunner.new
 
-    Chef::Recipe.any_instance.stub(:include_recipe)
-    Chef::Recipe.any_instance.should_receive(:include_recipe).with("ipmitool")
+    ::Chef::Recipe.any_instance.stub(:include_recipe)
+    ::Chef::Recipe.any_instance.should_receive(:include_recipe).with("ipmitool")
 
     chef_run.converge "conserver::server"
   end
 
   it "installs conserver::client" do
-    chef_run = ChefSpec::ChefRunner.new
+    chef_run = ::ChefSpec::ChefRunner.new
 
-    Chef::Recipe.any_instance.stub(:include_recipe)
-    Chef::Recipe.any_instance.should_receive(:include_recipe).with("conserver::client")
+    ::Chef::Recipe.any_instance.stub(:include_recipe)
+    ::Chef::Recipe.any_instance.should_receive(:include_recipe).with("conserver::client")
 
     chef_run.converge "conserver::server"
   end
@@ -56,14 +55,16 @@ describe "conserver::server" do
     end
 
     it "restarts conserver-server" do
-      pending
+      resource = [ "conserver-server", "service", "delayed" ]
+
+      @chef_run.template(@file).notifies(*resource).should be_true
     end
   end
 
   describe ".ipmipass" do
     before do
       @file = "/etc/conserver/.ipmipass"
-      @chef_run = ChefSpec::ChefRunner.new do |node|
+      @chef_run = ::ChefSpec::ChefRunner.new do |node|
         node.set['conserver'] = {}
         node.set['conserver']['ipmi'] = {}
         node.set['conserver']['ipmi']['password'] = "password"
@@ -90,7 +91,7 @@ describe "conserver::server" do
   describe "conserver.passwd" do
     before do
       @file = "/etc/conserver/conserver.passwd"
-      @chef_run = ChefSpec::ChefRunner.new do |node|
+      @chef_run = ::ChefSpec::ChefRunner.new do |node|
         node.set['conserver'] = {}
         node.set['conserver']['access'] = {}
         node.set['conserver']['access']['user'] = "user"
@@ -115,14 +116,16 @@ describe "conserver::server" do
     end
 
     it "restarts conserver-server" do
-      pending
+      resource = [ "conserver-server", "service", "delayed" ]
+
+      @chef_run.template(@file).notifies(*resource).should be_true
     end
   end
 
   describe "conserver.passwd" do
     before do
       @file = "/etc/conserver/conserver.cf"
-      Chef::Recipe.any_instance.stub(:search).with(:node, "id:*").and_return([
+      ::Chef::Recipe.any_instance.stub(:search).with(:node, "id:*").and_return([
         {
           "hostname" => "node1.example.com",
           "ipmi" => {
@@ -136,7 +139,7 @@ describe "conserver::server" do
           }
         }
       ])
-      @chef_run = ChefSpec::ChefRunner.new.converge "conserver::server"
+      @chef_run = ::ChefSpec::ChefRunner.new.converge "conserver::server"
     end
 
     it "has proper owner" do
@@ -179,7 +182,9 @@ describe "conserver::server" do
     end
 
     it "restarts conserver-server" do
-      pending
+      resource = [ "conserver-server", "service", "delayed" ]
+
+      @chef_run.template(@file).notifies(*resource).should be_true
     end
   end
 end
