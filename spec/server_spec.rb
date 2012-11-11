@@ -125,7 +125,7 @@ describe "conserver::server" do
   describe "conserver.passwd" do
     before do
       @file = "/etc/conserver/conserver.cf"
-      ::Chef::Recipe.any_instance.stub(:search).with(:node, "id:*").and_return([
+      ::Chef::Recipe.any_instance.stub(:search).with(:node, "id:* AND chef_environment:_default").and_return([
         {
           "hostname" => "node1.example.com",
           "ipmi" => {
