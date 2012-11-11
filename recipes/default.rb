@@ -17,4 +17,4 @@
 # limitations under the License.
 #
 
-include_recipe "conserver::server"
+include_recipe "conserver::client"
