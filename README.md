@@ -19,7 +19,7 @@ Attributes
 * `default['conserver']['conf_dir']` - The directory to conserver config files.
 * `default['conserver']['access']['allowed']` - The list of hostnames are added to the 'allowed' list, which grants connections from the hosts but requires username authentication.
 * `default['conserver']['access']['user']` - The console user to connect as.
-* `default['conserver']['password']` - The console password to use when connecting (Required).
+* `default['conserver']['password']` - The console password to use when connecting.  Generate a password via `openssl passwd -1 "theplaintextpassword"`.
 * `default['conserver']['logfile']` - Set the logfile to write to when in daemon mode.
 * `default['conserver']['idletimeout']` - The idle timeout of the console.
 * `default['conserver']['server']['port']` - Set the TCP port for the master process to listen on.
@@ -27,7 +27,7 @@ Attributes
 * `default['conserver']['server']['user']` - The user conserver runs as.
 * `default['conserver']['ipmi']['command']` - The IPMI SOL command to execute.
 * `default['conserver']['ipmi']['user']` - The IPMI user to connect as.
-* `default['conserver']['ipmi']['password']` - The IPMI password to use when connecting (Required).
+* `default['conserver']['ipmi']['password']` - The IPMI password to use when connecting.
 
 Usage
 =====
@@ -47,6 +47,27 @@ client
 ----
 
 Installs/Configures conserver-client
+
+To connect to the server as a client:
+
+    $ console -M `node['conserver']['server']['master']` -p `node['conserver']['server']['port']` -l `node['conserver']['access']['user']` `node['hostname']`
+
+e.g.:
+
+    $ console -M 127.0.0.1 -p 3109 -l admin o11r1
+
+To simplify add the following to the users .consolerc.  This should probably be added
+to the cookbook at some point.
+
+    config * {
+      master `node['conserver']['server']['master']`;
+      port `node['conserver']['server']['port']`;
+      username `node['conserver']['access']['user']`;
+    }
+
+The command now becomes:
+
+    $ console o11r1
 
 server
 ----

@@ -19,11 +19,11 @@
 
 include_attribute "ipmitool"
 
-default['conserver']['server_search'] = "id:*"
+default['conserver']['server_search'] = "id:* AND chef_environment:#{node.chef_environment}"
 default['conserver']['conf_dir'] = ::File.join ::File::SEPARATOR, "etc", "conserver"
 default['conserver']['access']['allowed'] = "127.0.0.1"
 default['conserver']['access']['user'] = "admin"
-default['conserver']['access']['password'] = "admin"
+default['conserver']['access']['password'] = "$1$OVTbqga.$TBqkdTXTzVPXRAx1cLNqG." # admin
 default['conserver']['logfile'] = ::File.join ::File::SEPARATOR, "var", "log", "conserver", "&.log"
 default['conserver']['idletimeout'] = "4h"
 
