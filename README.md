@@ -41,7 +41,7 @@ Usage
 default
 ----
 
-Installs/Configures conserver
+Installs/Configures conserver-client
 
 client
 ----

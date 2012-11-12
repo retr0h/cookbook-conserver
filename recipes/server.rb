@@ -29,6 +29,7 @@ end
 
 service "conserver-server" do
   supports :restart => true
+  pattern  "conserver"
 
   action [ :enable, :start ]
 end
