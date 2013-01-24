@@ -1,0 +1,2 @@
+cookbook 'conserver', :path => '/home/jdewey/git/cookbook-conserver'
+cookbook 'ipmitool', :locked_version => '1.1.0'
