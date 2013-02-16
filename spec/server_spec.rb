@@ -137,6 +137,9 @@ describe "conserver::server" do
           "ipmi" => {
             "address" => "172.16.2.2"
           }
+        },
+        {
+          "hostname" => "node3.example.com"
         }
       ])
       @chef_run = ::ChefSpec::ChefRunner.new.converge "conserver::server"
@@ -175,10 +178,6 @@ describe "conserver::server" do
     it "has exec" do
       @chef_run.should create_file_with_content @file,
         %Q{exec /usr/bin/ipmitool -f /etc/conserver/.ipmipass -H 172.16.2.1 -U root -C 3 -I lanplus sol activate;}
-    end
-
-    it "logs unsupported when running in Chef Solo" do
-      pending
     end
 
     it "restarts conserver-server" do
