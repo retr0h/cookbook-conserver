@@ -19,7 +19,7 @@
 
 include_attribute "ipmitool"
 
-default['conserver']['server_search'] = "id:* AND chef_environment:#{node.chef_environment}"
+default['conserver']['server_search'] = "id:* AND chef_environment:#{node.chef_environment} AND ipmi:address"
 default['conserver']['conf_dir'] = ::File.join ::File::SEPARATOR, "etc", "conserver"
 default['conserver']['access']['allowed'] = "127.0.0.1"
 default['conserver']['access']['user'] = "admin"

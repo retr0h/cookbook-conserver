@@ -22,7 +22,6 @@ include_recipe "conserver::client"
 
 # :pragma-foodcritic: ~FC003 - won't fix this
 servers = search :node, node["conserver"]["server_search"]
-filtered = servers && servers.select { |n| n['ipmi'] }
 
 package "conserver-server" do
   action :upgrade
@@ -75,7 +74,7 @@ template ::File.join(node['conserver']['conf_dir'], "conserver.cf") do
   action :create
 
   variables(
-    :servers => filtered
+    :servers => servers
   )
 
   notifies :restart, resources(:service => "conserver-server")
