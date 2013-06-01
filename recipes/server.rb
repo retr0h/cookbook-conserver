@@ -51,7 +51,7 @@ template ::File.join(node['conserver']['conf_dir'], "server.conf") do
 
   action :create
 
-  notifies :restart, resources(:service => "conserver-server")
+  notifies :restart, "service[conserver-server]"
 end
 
 template ::File.join(node['conserver']['conf_dir'], "conserver.passwd") do
@@ -62,7 +62,7 @@ template ::File.join(node['conserver']['conf_dir'], "conserver.passwd") do
 
   action :create
 
-  notifies :restart, resources(:service => "conserver-server")
+  notifies :restart, "service[conserver-server]"
 end
 
 template ::File.join(node['conserver']['conf_dir'], "conserver.cf") do
@@ -77,5 +77,5 @@ template ::File.join(node['conserver']['conf_dir'], "conserver.cf") do
     :servers => servers
   )
 
-  notifies :restart, resources(:service => "conserver-server")
+  notifies :restart, "service[conserver-server]"
 end
