@@ -77,13 +77,11 @@ server
 Installs/Configures conserver-server
 
 Testing
-=====
+=======
 
-This cookbook is using [ChefSpec](https://github.com/acrmp/chefspec) for
-testing.  Should run the following before commiting.  It will run your tests,
-and check for lint errors.
-
-    % ./run_tests.bash
+    $ bundle install
+    $ bundle exec berks install
+    $ bundle exec strainer test
 
 License and Author
 ==================
