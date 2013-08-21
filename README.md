@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/retr0h/cookbook-conserver.png?branch=master)](https://travis-ci.org/retr0h/cookbook-conserver)
+[![Dependency Status](https://gemnasium.com/retr0h/cookbook-conserver.png)](https://gemnasium.com/retr0h/cookbook-conserver)
 
 Description
 ===========
