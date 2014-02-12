@@ -1,8 +1,9 @@
+# encoding: UTF-8
 #
 # Cookbook Name:: conserver
 # Recipe:: default
 #
-# Copyright 2012-2013, John Dewey
+# Copyright 2012-2014, John Dewey
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,20 +18,29 @@
 # limitations under the License.
 #
 
-include_attribute "ipmitool"
+include_attribute 'ipmitool'
 
-default['conserver']['server_search'] = "id:* AND chef_environment:#{node.chef_environment} AND ipmi:address"
-default['conserver']['conf_dir'] = ::File.join ::File::SEPARATOR, "etc", "conserver"
-default['conserver']['access']['allowed'] = "127.0.0.1"
-default['conserver']['access']['user'] = "admin"
-default['conserver']['access']['password'] = "$1$OVTbqga.$TBqkdTXTzVPXRAx1cLNqG." # admin
-default['conserver']['logfile'] = ::File.join ::File::SEPARATOR, "var", "log", "conserver", "&.log"
-default['conserver']['idletimeout'] = "4h"
+query = "id:* AND chef_environment:#{node.chef_environment} AND ipmi:address"
+default['conserver']['server_search'] = query
+default['conserver']['conf_dir'] = File.join(
+  File::SEPARATOR, 'etc', 'conserver'
+)
+default['conserver']['access']['allowed'] = '127.0.0.1'
+default['conserver']['access']['user'] = 'admin'
+password = '$1$OVTbqga.$TBqkdTXTzVPXRAx1cLNqG.'
+default['conserver']['access']['password'] = password
+default['conserver']['logfile'] = File.join(
+  File::SEPARATOR, 'var', 'log', 'conserver', '&.log'
+)
+default['conserver']['idletimeout'] = '4h'
 
-default['conserver']['server']['port'] = "3109"
-default['conserver']['server']['master'] = "127.0.0.1"
-default['conserver']['server']['user'] = "conservr"
+default['conserver']['server']['port'] = '3109'
+default['conserver']['server']['master'] = '127.0.0.1'
+default['conserver']['server']['user'] = 'conservr'
 
-default['conserver']['ipmi']['command'] = "#{node['ipmitool']['cmd']} -f #{::File.join node['conserver']['conf_dir'], ".ipmipass"} -H %s -U %s -C 3 -I lanplus sol activate"
-default['conserver']['ipmi']['user'] = "root"
-default['conserver']['ipmi']['password'] = "root"
+cmd  = "#{node['ipmitool']['cmd']} "
+cmd += "-f #{File.join node['conserver']['conf_dir'], ".ipmipass"} "
+cmd += '-H %s -U %s -C 3 -I lanplus sol activate'
+default['conserver']['ipmi']['command'] = cmd
+default['conserver']['ipmi']['user'] = 'root'
+default['conserver']['ipmi']['password'] = 'root'

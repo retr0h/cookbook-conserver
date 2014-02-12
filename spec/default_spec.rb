@@ -1,11 +1,12 @@
-require "chefspec"
+# encoding: UTF-8
 
-describe "conserver::default" do
-  it "installs server" do
-    chef_run = ::ChefSpec::ChefRunner.new
+require_relative 'spec_helper'
 
-    ::Chef::Recipe.any_instance.should_receive(:include_recipe).with("conserver::client")
+describe 'conserver::default' do
+  it 'installs server' do
+    chef_run = ChefSpec::Runner.new
+    chef_run.converge 'conserver::default'
 
-    chef_run.converge "conserver::default"
+    expect(chef_run).to include_recipe 'conserver::client'
   end
 end
