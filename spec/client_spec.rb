@@ -1,9 +1,11 @@
-require "chefspec"
+# encoding: UTF-8
 
-describe "conserver::client" do
-  before { @chef_run = ::ChefSpec::ChefRunner.new.converge "conserver::client" }
+require_relative 'spec_helper'
 
-  it "installs package" do
-    @chef_run.should upgrade_package "conserver-client"
+describe 'conserver::client' do
+  before { @chef_run = ChefSpec::Runner.new.converge 'conserver::client' }
+
+  it 'installs package' do
+    expect(@chef_run).to upgrade_package 'conserver-client'
   end
 end
