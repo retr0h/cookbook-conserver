@@ -29,15 +29,15 @@ end
 
 service 'conserver-server' do
   supports restart: true
-  pattern  'conserver'
+  pattern 'conserver'
 
   action [:enable, :start]
 end
 
 file File.join(node['conserver']['conf_dir'], '.ipmipass') do
-  owner   node['conserver']['server']['user']
-  group   'root'
-  mode    00600
+  owner node['conserver']['server']['user']
+  group 'root'
+  mode 00600
   content node['conserver']['ipmi']['password']
 
   action :create
@@ -45,9 +45,9 @@ end
 
 template File.join(node['conserver']['conf_dir'], 'server.conf') do
   source 'server.conf.erb'
-  owner  'root'
-  group  'root'
-  mode   00644
+  owner 'root'
+  group 'root'
+  mode 00644
 
   action :create
 
@@ -56,9 +56,9 @@ end
 
 template File.join(node['conserver']['conf_dir'], 'conserver.passwd') do
   source 'conserver.passwd.erb'
-  owner  node['conserver']['server']['user']
-  group  'root'
-  mode   00600
+  owner node['conserver']['server']['user']
+  group 'root'
+  mode 00600
 
   action :create
 
@@ -67,9 +67,9 @@ end
 
 template File.join(node['conserver']['conf_dir'], 'conserver.cf') do
   source 'conserver.cf.erb'
-  owner  'root'
-  group  'root'
-  mode   00644
+  owner 'root'
+  group 'root'
+  mode 00644
 
   action :create
 
