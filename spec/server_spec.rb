@@ -37,12 +37,12 @@ describe 'conserver::server' do
     end
 
     it 'has proper modes' do
-      expect(sprintf('%o', file.mode)).to eq '644'
+      expect(format('%o', file.mode)).to eq '644'
     end
 
     it 'has daemon opts' do
       expect(chef_run).to render_file(file.name)
-        .with_content %Q{OPTS='-p 3109 -M 127.0.0.1'}
+        .with_content %Q(OPTS='-p 3109 -M 127.0.0.1')
     end
 
     it 'restarts conserver-server' do
@@ -60,12 +60,12 @@ describe 'conserver::server' do
     end
 
     it 'has proper modes' do
-      expect(sprintf('%o', file.mode)).to eq '600'
+      expect(format('%o', file.mode)).to eq '600'
     end
 
     it 'has password' do
       expect(chef_run).to render_file(file.name)
-        .with_content %Q{password}
+        .with_content %Q(password)
     end
   end
 
@@ -82,12 +82,12 @@ describe 'conserver::server' do
     end
 
     it 'has proper modes' do
-      expect(sprintf('%o', file.mode)).to eq '600'
+      expect(format('%o', file.mode)).to eq '600'
     end
 
     it 'has user:password' do
       expect(chef_run).to render_file(file.name)
-        .with_content %Q{user:password}
+        .with_content %Q(user:password)
     end
 
     it 'restarts conserver-server' do
@@ -122,27 +122,27 @@ describe 'conserver::server' do
     end
 
     it 'has proper modes' do
-      expect(sprintf('%o', file.mode)).to eq '644'
+      expect(format('%o', file.mode)).to eq '644'
     end
 
     it 'has logfile' do
       expect(chef_run).to render_file(file.name)
-        .with_content %Q{logfile /var/log/conserver/&.log}
+        .with_content %Q(logfile /var/log/conserver/&.log)
     end
 
     it 'has allowed' do
       expect(chef_run).to render_file(file.name)
-        .with_content %Q{allowed 127.0.0.1}
+        .with_content %Q(allowed 127.0.0.1)
     end
 
     it 'has console' do
       expect(chef_run).to render_file(file.name)
-        .with_content %Q{console node1.example.com}
+        .with_content %Q(console node1.example.com)
     end
 
     it 'has idletimeout' do
       expect(chef_run).to render_file(file.name)
-        .with_content %Q{idletimeout 4h}
+        .with_content %Q(idletimeout 4h)
     end
 
     it 'has exec' do
