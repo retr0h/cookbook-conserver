@@ -1,0 +1,8 @@
+image: ruby:2.0.0
+script:
+  - bundle
+  - rake test
+notify:
+  email:
+    recipients:
+      - john@dewey.ws
