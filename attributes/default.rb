@@ -39,7 +39,7 @@ default['conserver']['server']['master'] = '127.0.0.1'
 default['conserver']['server']['user'] = 'conservr'
 
 cmd  = "#{node['ipmitool']['cmd']} "
-cmd += "-f #{File.join node['conserver']['conf_dir'], ".ipmipass"} "
+cmd += "-f #{File.join node['conserver']['conf_dir'], '.ipmipass'} "
 cmd += '-H %s -U %s -C 3 -I lanplus sol activate'
 default['conserver']['ipmi']['command'] = cmd
 default['conserver']['ipmi']['user'] = 'root'
