@@ -11,7 +11,7 @@ Assumes the node has IPMI connectivity to `node['ipmi']['address']` found by `no
 Requirements
 ============
 
-* Chef 0.8+
+* Chef 11
 * ipmitool
 * Ohai [ipmi.rb](https://bitbucket.org/retr0h/ohai/src) plugin
 
@@ -35,19 +35,25 @@ Attributes
 Usage
 =====
 
+default
+----
+
 ```json
 "run_list": [
     "recipe[conserver]"
 ]
 ```
 
-default
-----
-
 Installs/Configures conserver-client
 
 client
 ----
+
+```json
+"run_list": [
+    "recipe[conserver::client]"
+]
+```
 
 Installs/Configures conserver-client
 
@@ -75,14 +81,18 @@ The command now becomes:
 server
 ----
 
+```json
+"run_list": [
+    "recipe[conserver::server]"
+]
+```
+
 Installs/Configures conserver-server
 
 Testing
 =======
 
-    $ bundle install
-    $ bundle exec berks install
-    $ bundle exec strainer test
+    $ rake
 
 License and Author
 ==================
