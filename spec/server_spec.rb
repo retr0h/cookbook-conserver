@@ -3,7 +3,7 @@
 require_relative 'spec_helper'
 
 describe 'conserver::server' do
-  before { Chef::Recipe.any_instance.stub(:search) }
+  before { allow_any_instance_of(Chef::Recipe).to receive(:search) }
   let(:runner) { ChefSpec::Runner.new }
   let(:node) { runner.node }
   let(:chef_run) { runner.converge(described_recipe) }
@@ -97,7 +97,7 @@ describe 'conserver::server' do
 
   context 'conserver.passwd' do
     before do
-      Chef::Recipe.any_instance.stub(:search)
+      allow_any_instance_of(Chef::Recipe).to receive(:search)
         .with(:node, 'id:* AND chef_environment:_default AND ipmi:address')
         .and_return([
           {
