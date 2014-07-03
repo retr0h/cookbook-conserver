@@ -42,7 +42,7 @@ describe 'conserver::server' do
 
     it 'has daemon opts' do
       expect(chef_run).to render_file(file.name)
-        .with_content %Q(OPTS='-p 3109 -M 127.0.0.1')
+        .with_content "OPTS='-p 3109 -M 127.0.0.1'"
     end
 
     it 'restarts conserver-server' do
@@ -65,7 +65,7 @@ describe 'conserver::server' do
 
     it 'has password' do
       expect(chef_run).to render_file(file.name)
-        .with_content %Q(password)
+        .with_content 'password'
     end
   end
 
@@ -87,7 +87,7 @@ describe 'conserver::server' do
 
     it 'has user:password' do
       expect(chef_run).to render_file(file.name)
-        .with_content %Q(user:password)
+        .with_content 'user:password'
     end
 
     it 'restarts conserver-server' do
@@ -127,22 +127,22 @@ describe 'conserver::server' do
 
     it 'has logfile' do
       expect(chef_run).to render_file(file.name)
-        .with_content %Q(logfile /var/log/conserver/&.log)
+        .with_content 'logfile /var/log/conserver/&.log'
     end
 
     it 'has allowed' do
       expect(chef_run).to render_file(file.name)
-        .with_content %Q(allowed 127.0.0.1)
+        .with_content 'allowed 127.0.0.1'
     end
 
     it 'has console' do
       expect(chef_run).to render_file(file.name)
-        .with_content %Q(console node1.example.com)
+        .with_content 'console node1.example.com'
     end
 
     it 'has idletimeout' do
       expect(chef_run).to render_file(file.name)
-        .with_content %Q(idletimeout 4h)
+        .with_content 'idletimeout 4h'
     end
 
     it 'has exec' do
