@@ -12,7 +12,8 @@ Assumes the node has IPMI connectivity to `node['ipmi']['address']` found by `no
 Requirements
 ============
 
-* Chef 11
+* Chef 12
+* Ruby 2.1.0/2.2.0
 * ipmitool
 * Ohai [ipmi.rb](https://bitbucket.org/retr0h/ohai/src) plugin
 
