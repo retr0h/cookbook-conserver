@@ -37,7 +37,7 @@ end
 file File.join(node['conserver']['conf_dir'], '.ipmipass') do
   owner node['conserver']['server']['user']
   group 'root'
-  mode 00600
+  mode 0o600
   content node['conserver']['ipmi']['password']
 
   action :create
@@ -47,7 +47,7 @@ template File.join(node['conserver']['conf_dir'], 'server.conf') do
   source 'server.conf.erb'
   owner 'root'
   group 'root'
-  mode 00644
+  mode 0o644
 
   action :create
 
@@ -58,7 +58,7 @@ template File.join(node['conserver']['conf_dir'], 'conserver.passwd') do
   source 'conserver.passwd.erb'
   owner node['conserver']['server']['user']
   group 'root'
-  mode 00600
+  mode 0o600
 
   action :create
 
@@ -69,7 +69,7 @@ template File.join(node['conserver']['conf_dir'], 'conserver.cf') do
   source 'conserver.cf.erb'
   owner 'root'
   group 'root'
-  mode 00644
+  mode 0o644
 
   action :create
 
