@@ -4,6 +4,6 @@ DEPENDENCIES
     metadata: true
 
 GRAPH
-  conserver (0.1.3)
+  conserver (0.1.4)
     ipmitool (>= 0.0.0)
   ipmitool (1.1.0)
