@@ -4,7 +4,7 @@ require_relative 'spec_helper'
 
 describe 'conserver::server' do
   before { allow_any_instance_of(Chef::Recipe).to receive(:search) }
-  let(:runner) { ChefSpec::ServerRunner.new }
+  let(:runner) { ChefSpec::SoloRunner.new }
   let(:node) { runner.node }
   let(:chef_run) { runner.converge(described_recipe) }
 

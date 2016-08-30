@@ -3,7 +3,7 @@
 require_relative 'spec_helper'
 
 describe 'conserver::default' do
-  let(:chef_run) { ChefSpec::ServerRunner.new.converge(described_recipe) }
+  let(:chef_run) { ChefSpec::SoloRunner.new.converge(described_recipe) }
 
   it 'installs server' do
     expect(chef_run).to include_recipe 'conserver::client'
