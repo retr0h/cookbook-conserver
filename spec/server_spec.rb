@@ -51,7 +51,7 @@ describe 'conserver::server' do
   end
 
   context '.ipmipass' do
-    before { node.set['conserver']['ipmi']['password'] = 'password' }
+    before { node.override['conserver']['ipmi']['password'] = 'password' }
     let(:file) { chef_run.file '/etc/conserver/.ipmipass' }
 
     it 'has proper owner' do
@@ -71,8 +71,8 @@ describe 'conserver::server' do
 
   context 'conserver.passwd' do
     before do
-      node.set['conserver']['access']['user'] = 'user'
-      node.set['conserver']['access']['password'] = 'password'
+      node.override['conserver']['access']['user'] = 'user'
+      node.override['conserver']['access']['password'] = 'password'
     end
     let(:file) { chef_run.template '/etc/conserver/conserver.passwd' }
 
@@ -100,19 +100,19 @@ describe 'conserver::server' do
       allow_any_instance_of(Chef::Recipe).to receive(:search)
         .with(:node, 'id:* AND chef_environment:_default AND ipmi:address')
         .and_return([
-          {
-            'hostname' => 'node1.example.com',
-            'ipmi' => {
-              'address' => '172.16.2.1'
-            }
-          },
-          {
-            'hostname' => 'node2.example.com',
-            'ipmi' => {
-              'address' => '172.16.2.2'
-            }
-          }
-        ])
+                      {
+                        'hostname' => 'node1.example.com',
+                        'ipmi' => {
+                          'address' => '172.16.2.1'
+                        }
+                      },
+                      {
+                        'hostname' => 'node2.example.com',
+                        'ipmi' => {
+                          'address' => '172.16.2.2'
+                        }
+                      }
+                    ])
     end
     let(:file) { chef_run.template '/etc/conserver/conserver.cf' }
 
